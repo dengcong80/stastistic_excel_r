@@ -1,0 +1,80 @@
+---
+title: "exercise3"
+author: "cden903"
+date: "2026-03-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{R}
+# Load the dataset
+camplake <- read.csv("camplake.csv")
+
+# Fit the linear model: Length as response, Age and Scale.Radius as predictors
+m <- lm(Length ~ Age + Scale.Radius, data = camplake)
+
+
+# Set up a 1x2 plotting area
+par(mfrow = c(1, 2))
+
+# Residuals vs Age
+plot(camplake$Age, residuals(m), 
+     main = "Residuals vs Age", xlab = "Age", ylab = "Residuals")
+abline(h = 0, col = "red", lty = 2)
+
+# Residuals vs Scale.Radius
+plot(camplake$Scale.Radius, residuals(m), 
+     main = "Residuals vs Scale.Radius", xlab = "Scale Radius", ylab = "Residuals")
+abline(h = 0, col = "red", lty = 2)
+
+par(mfrow = c(1, 2))
+
+# Plot for Age
+plot(camplake$Age, camplake$Length, main = "Fit: Age vs Length", 
+     xlab = "Age", ylab = "Length", pch = 16)
+points(camplake$Age, predict(m), col = "blue", pch = 4)
+
+# Plot for Scale.Radius
+plot(camplake$Scale.Radius, camplake$Length, main = "Fit: Scale.Radius vs Length", 
+     xlab = "Scale Radius", ylab = "Length", pch = 16)
+points(camplake$Scale.Radius, predict(m), col = "red", pch = 4)
+
+
+par(mfrow = c(1, 2))
+
+# Q-Q plot for Predictions
+qqnorm(predict(m), main = "Normal Q-Q (Predictions)")
+qqline(predict(m), col = "steelblue", lwd = 2)
+
+# Q-Q plot for Residuals
+qqnorm(residuals(m), main = "Normal Q-Q (Residuals)")
+qqline(residuals(m), col = "steelblue", lwd = 2)
+
+# Reset plotting layout to see them one by one or in a grid
+par(mfrow = c(2, 2))
+plot(m)
+
+
+```
+
+```{R}
+# Create a sequence of x values from 0 to 2*pi
+x <- seq(0, 2 * pi, length.out = 1000)
+
+# Calculate the sine of those values
+y <- sin(x)
+
+# Create the plot
+plot(x, y, 
+     type = "l", 
+     col = "#C0C0C0",       # This is the Hex code for Silver
+     lwd = 3, 
+     main = "Sine Curve on [0, 2pi]",
+     xlab = "x", 
+     ylab = "sin(x)")
+
+
+```
